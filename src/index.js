@@ -120,24 +120,42 @@ document.addEventListener("DOMContentLoaded", () => {
     // For each choice create a new radio input with a label, and append it to the choice container.
     // Each choice should be displayed as a radio input element with a label:
 
-    quiz.questions(quiz.currentQuestionIndex);
-    const choiceElements = `
-      <li>
-        <input type="radio" name="name" value="CHOICE TEXT HERE">
-        <label>CHOICE TEXT HERE</label>
-        <br>
-      </li>
-`;
+    const currentQuestion = quiz.questions[quiz.currentQuestionIndex];
+    currentQuestion.choices.forEach(choice => {
+      const liElement = document.createElement('li');
 
-    choiceContainer.appendChild('test');
+      liElement.innerHTML = `
+          <li>
+            <input type="radio" name="${choice}" value="${choice}">
+            <label>${choice}</label>
+            <br>
+          </li>
+    `;
 
+      choiceContainer.appendChild(liElement);
 
+      // const liElement = document.createElement('li');
+      // const inputElement = document.createElement('input');
+      // const labelElement = document.createElement('label');
+      // const brElement = document.createElement('br');
+
+      // inputElement.type = 'radio';
+      // inputElement.name = `${choice}`;
+      // inputElement.value = `${choice}`;
+
+      // labelElement.htmlFor = `${choice}`;
+      // labelElement.innerText = `${choice}`;
+
+      // liElement.appendChild(inputElement);
+      // liElement.appendChild(labelElement);
+      // liElement.appendChild(brElement);
+      // choiceContainer.appendChild(liElement);
+    });
 
     // Hint 1: You can use the `document.createElement()` method to create a new element.
     // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
     // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
     // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
-
   }
 
 
