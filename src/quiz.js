@@ -52,8 +52,17 @@ class Quiz {
 
 	averageDifficulty() {
 		return (
-			this.questions.reduce((sum, question) => sum + question.difficulty, 0) /
+			this.questions.reduce((sum, { difficulty }) => sum + difficulty, 0) /
 			this.questions.length
 		);
+	}
+
+	getFormattedRemainingTime() {
+		const minutes = Math.floor(this.timeRemaining / 60)
+			.toString()
+			.padStart(2, '0');
+		const seconds = (this.timeRemaining % 60).toString().padStart(2, '0');
+
+		return `${minutes}:${seconds}`;
 	}
 }
