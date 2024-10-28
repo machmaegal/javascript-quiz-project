@@ -121,36 +121,41 @@ document.addEventListener("DOMContentLoaded", () => {
     // Each choice should be displayed as a radio input element with a label:
 
     const currentQuestion = quiz.questions[quiz.currentQuestionIndex];
-    currentQuestion.choices.forEach(choice => {
-      const liElement = document.createElement('li');
 
-      liElement.innerHTML = `
-          <li>
-            <input type="radio" name="${choice}" value="${choice}">
-            <label>${choice}</label>
-            <br>
-          </li>
-    `;
+    currentQuestion.choices.forEach((choice, i) => {
+			const liElement = document.createElement('li');
 
-      choiceContainer.appendChild(liElement);
+			liElement.innerHTML = /*html*/ `
+				<input
+					type="radio"
+					name="question-${quiz.currentQuestionIndex}"
+					value="${choice}"
+					id="${i}"
+				/>
+				<label for="${i}">${choice}</label>
+				<br />
+			`;
 
-      // const liElement = document.createElement('li');
-      // const inputElement = document.createElement('input');
-      // const labelElement = document.createElement('label');
-      // const brElement = document.createElement('br');
+			choiceContainer.appendChild(liElement);
 
-      // inputElement.type = 'radio';
-      // inputElement.name = `${choice}`;
-      // inputElement.value = `${choice}`;
+			// const liElement = document.createElement('li');
+			// const inputElement = document.createElement('input');
+			// const labelElement = document.createElement('label');
+			// const brElement = document.createElement('br');
 
-      // labelElement.htmlFor = `${choice}`;
-      // labelElement.innerText = `${choice}`;
+			// inputElement.type = 'radio';
+			// inputElement.name = `question-${quiz.currentQuestionIndex}`;
+			// inputElement.value = `${choice}`;
+			// inputElement.id = `${i}`;
 
-      // liElement.appendChild(inputElement);
-      // liElement.appendChild(labelElement);
-      // liElement.appendChild(brElement);
-      // choiceContainer.appendChild(liElement);
-    });
+			// labelElement.htmlFor = `${i}`;
+			// labelElement.innerText = `${choice}`;
+
+			// liElement.appendChild(inputElement);
+			// liElement.appendChild(labelElement);
+			// liElement.appendChild(brElement);
+			// choiceContainer.appendChild(liElement);
+		});
 
     // Hint 1: You can use the `document.createElement()` method to create a new element.
     // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
