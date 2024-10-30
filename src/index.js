@@ -33,9 +33,27 @@ document.addEventListener("DOMContentLoaded", () => {
 			1
 		),
 		new Question(
+			'What color are bananas when they are ripe?',
+			['Blue', 'Red', 'Yellow', 'Purple'],
+			'Yellow',
+			1
+		),
+		new Question(
 			'Who created JavaScript?',
 			['Plato', 'Brendan Eich', 'Lea Verou', 'Bill Gates'],
 			'Brendan Eich',
+			2
+		),
+		new Question(
+			'Which planet is known as the "Red Planet"?',
+			['Venus', 'Mars', 'Jupiter', 'Saturn'],
+			'Mars',
+			2
+		),
+		new Question(
+			'Which element\'s chemical symbol is "O"?',
+			['Gold', 'Oxygen', 'Silver', 'Hydrogen'],
+			'Oxygen',
 			2
 		),
 		new Question(
@@ -44,7 +62,18 @@ document.addEventListener("DOMContentLoaded", () => {
 			'E = mc^2',
 			3
 		),
-		new Question("What's my name?", ['Pandau', 'Stephan', 'Joshua', 'Fab'], 3),
+		new Question(
+			'Which philosopher is known for the statement "I think, therefore I am"?',
+			['Friedrich Nietzsche', 'Immanuel Kant', 'René Descartes', 'John Locke'],
+			'René Descartes',
+			3
+		),
+		new Question(
+			'Which of the following scientists is known for developing the uncertainty principle in quantum mechanics?',
+			['Albert Einstein', 'Niels Bohr', 'Werner Heisenberg', 'Max Planck'],
+			'Werner Heisenberg',
+			3
+		),
 		// Add more questions here
 	];
 	const quizDuration = 120; // 120 seconds (2 minutes)
