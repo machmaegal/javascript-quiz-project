@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			'E = mc^2',
 			3
 		),
+		new Question("What's my name?", ['Pandau', 'Stephan', 'Joshua', 'Fab'], 3),
 		// Add more questions here
 	];
 	const quizDuration = 120; // 120 seconds (2 minutes)
