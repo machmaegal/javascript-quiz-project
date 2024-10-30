@@ -4,6 +4,7 @@ class Quiz {
 	// 1. constructor (questions, timeLimit, timeRemaining)
 	constructor(questions, timeLimit, timeRemaining) {
 		this.questions = questions;
+		this.questionsForRendering = questions;
 		this.timeLimit = timeLimit;
 		this.timeRemaining = timeRemaining;
 		this.correctAnswers = 0;
@@ -12,7 +13,7 @@ class Quiz {
 
 	// 2. getQuestion()
 	getQuestion() {
-		return this.questions[this.currentQuestionIndex];
+		return this.questionsForRendering[this.currentQuestionIndex];
 	}
 
 	// 3. moveToNextQuestion()
@@ -22,20 +23,20 @@ class Quiz {
 
 	// 4. shuffleQuestions()
 	shuffleQuestions() {
-		this.questions.sort(() => Math.random() - 0.5);
+		this.questionsForRendering.sort(() => Math.random() - 0.5);
 	}
 
 	// 5. checkAnswer(answer)
 	checkAnswer(answer) {
 		const answerIsCorrect =
-			this.questions[this.currentQuestionIndex].answer === answer;
+			this.questionsForRendering[this.currentQuestionIndex].answer === answer;
 
 		if (answerIsCorrect) this.correctAnswers++;
 	}
 
 	// 6. hasEnded()
 	hasEnded() {
-		if (this.questions.length === this.currentQuestionIndex) return true;
+		if (this.questionsForRendering.length === this.currentQuestionIndex) return true;
 		return false;
 	}
 
@@ -45,7 +46,7 @@ class Quiz {
 
 		if (difficultyIsInvalid) return this.questions;
 
-		this.questions = this.questions.filter(
+		this.questionsForRendering = this.questions.filter(
 			question => question.difficulty === difficulty
 		);
 	}
@@ -55,6 +56,10 @@ class Quiz {
 			this.questions.reduce((sum, { difficulty }) => sum + difficulty, 0) /
 			this.questions.length
 		);
+	}
+
+	setDifficulty(setting) {
+		this.questionsForRendering = this.questions.filter(question => question.difficulty === setting);
 	}
 
 	getFormattedRemainingTime() {
