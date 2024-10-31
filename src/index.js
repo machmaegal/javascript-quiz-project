@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
 	/************  HTML ELEMENTS  ************/
 	// View divs
 	const quizView = document.querySelector('#quizView');
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	/************  SHOW INITIAL CONTENT  ************/
 
 	// Display the time remaining in the time remaining container
-	const timeRemainingContainer = document.getElementById('timeRemaining');
+	const timeRemainingContainer = document.querySelector('#timeRemaining span');
 	timeRemainingContainer.innerText = quiz.getFormattedRemainingTime();
 
 	// Show first question
@@ -103,8 +103,47 @@ document.addEventListener("DOMContentLoaded", () => {
 			quiz.timeRemaining--;
 			timeRemainingContainer.innerText = quiz.getFormattedRemainingTime();
 
+			// Animate pie chart over the countdown duration
+			const timeRemainingRelative = quiz.timeRemaining / quizDuration;
+			updatePieChart(timeRemainingRelative);
+
 			if (quiz.timeRemaining === 0) showResults();
 		}, 1000);
+	}
+
+	const ctx = document.getElementById('piechart').getContext('2d');
+	const piechart = new Chart(ctx, {
+		type: 'pie',
+		data: {
+			hoverOffset: 100,
+			datasets: [
+				{
+					data: [0, 1],
+					backgroundColor: ['transparent', 'lightgreen'],
+					borderWidth: 0,
+				},
+			],
+		},
+		options: {
+			// animations: 'none',
+		},
+	});
+
+	function updatePieChart(value) {
+		const redArea = 0.2;
+		const orangeArea = 0.5;
+
+		if (value === redArea)
+			piechart.data.datasets[0].backgroundColor = ['transparent', 'red'];
+
+		if (value === orangeArea)
+			piechart.data.datasets[0].backgroundColor = ['transparent', 'orange'];
+
+		if (value === 1)
+			piechart.data.datasets[0].backgroundColor = ['transparent', 'lightgreen'];
+
+		piechart.data.datasets[0].data = [1 - value, value];
+		piechart.update();
 	}
 
 	// start timer on page load
@@ -257,6 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		quiz.timeRemaining = quizDuration;
 		timeRemainingContainer.innerText = quiz.getFormattedRemainingTime();
 
+		updatePieChart(1);
 		startTimer();
 		showQuestion();
 	}
