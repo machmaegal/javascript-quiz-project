@@ -12,8 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
 	const choiceContainer = document.querySelector('#choices');
 	const nextButton = document.querySelector('#nextButton');
 	const restartButton = document.querySelector('#restartButton');
-	const startButton = document.querySelector('#startButton');
-	const settingsContainer = document.querySelector('#settings');
+	const easySettingButton = document.querySelector('#easy-setting');
+	const mediumSettingButton = document.querySelector('#medium-setting');
+	const hardSettingButton = document.querySelector('#hard-setting');
+	//const startButton = document.querySelector('#startButton');
 
 
 	// End view elements
@@ -22,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	/************  SET VISIBILITY OF VIEWS  ************/
 
 	// Show the quiz view (div#quizView) and hide the end view (div#endView)
-	settingsView.style.display = 'block';
+	settingsView.style.display = 'flex';
 	quizView.style.display = 'none';
 	endView.style.display = 'none';
 
@@ -85,9 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	/************  QUIZ INSTANCE  ************/
 
-	//show difficulty settings
-	showSettings();
-
 	// make difficulty selection
 
 	// Create a new Quiz instance object
@@ -118,54 +117,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	/************  EVENT LISTENERS  ************/
 
-	startButton.addEventListener('click', startButtonHandler);
+	//startButton.addEventListener('click', startButtonHandler);
 	nextButton.addEventListener('click', nextButtonHandler);
 	restartButton.addEventListener('click', restartButtonHandler);
-
+	easySettingButton.addEventListener('click', easyButtonHandler);
+	mediumSettingButton.addEventListener('click', mediumButtonHandler);
+	hardSettingButton.addEventListener('click', hardButtonHandler);
 
 	/************  FUNCTIONS  ************/
 
 	// showQuestion() - Displays the current question and its choices
 	// nextButtonHandler() - Handles the click on the next button
 	// showResults() - Displays the end view and the quiz results
-	function showSettings() {
-		//create view html
-		const settings = ["easy", "medium", "hard"];
 
-		settings.forEach((setting) => {
-			console.log("🚀 ~ settings.forEach ~ setting:", setting);
-			const liElement = document.createElement('li');
 
-			liElement.innerHTML = /*html*/ `
-				<input
-					type="radio"
-					name="setting"
-					value="${setting}"
-					id="${setting}-setting"
-				/>
-				<label for="${setting}-setting">${setting}</label>
-				<br />
-			`;
-
-			settingsContainer.appendChild(liElement);
-		});
-
-	}
-
-	function setDifficulty() {
-		const difficulty = document.querySelector('#settings li input:checked').value;
-		switch (true) {
-			case difficulty === 'easy':
-				quiz.setDifficulty(1);
-				break;
-			case difficulty === 'medium':
-				quiz.setDifficulty(2);
-				break;
-			case difficulty === 'hard':
-				quiz.setDifficulty(3);
-				break;
-		}
-	}
 
 	function showQuestion() {
 		// If the quiz has ended, show the results
@@ -228,16 +193,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	}
 
-	function startButtonHandler() {
+	/* function setDifficulty() {
+		const difficulty = document.querySelector('#settings li input:checked').value;
+		switch (true) {
+			case difficulty === 'easy':
+				quiz.setDifficulty(1);
+				break;
+			case difficulty === 'medium':
+				quiz.setDifficulty(2);
+				break;
+			case difficulty === 'hard':
+				quiz.setDifficulty(3);
+				break;
+		}
+	} */
+
+	function easyButtonHandler() {
 		settingsView.style.display = 'none';
 		quizView.style.display = 'block';
 
-		setDifficulty();
+		quiz.setDifficulty(1);
 
 		showQuestion();
 
 		startTimer();
+	}
 
+	function mediumButtonHandler() {
+		settingsView.style.display = 'none';
+		quizView.style.display = 'block';
+
+		quiz.setDifficulty(2);
+
+		showQuestion();
+
+		startTimer();
+	}
+
+	function hardButtonHandler() {
+		settingsView.style.display = 'none';
+		quizView.style.display = 'block';
+
+		quiz.setDifficulty(3);
+
+		showQuestion();
+
+		startTimer();
 	}
 
 	function nextButtonHandler() {
@@ -271,7 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	function restartButtonHandler() {
-		settingsView.style.display = 'block';
+		settingsView.style.display = 'flex';
 		endView.style.display = 'none';
 
 		quiz.correctAnswers = 0;

@@ -108,6 +108,16 @@ input[type="radio"] {
     flex-direction: column;
 }
 
+#settingsView {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+#settingsView>button {
+    margin: 10px;
+}
+
 #choices {
     min-width: 25px;
     margin: 0 auto;

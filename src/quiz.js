@@ -59,7 +59,9 @@ class Quiz {
 	}
 
 	setDifficulty(setting) {
+		console.log('vor Filterung ', this.questions);
 		this.questionsForRendering = this.questions.filter(question => question.difficulty === setting);
+		console.log("🚀 ~ Quiz ~ setDifficulty ~ this.questionsForRendering:", this.questionsForRendering);
 	}
 
 	getFormattedRemainingTime() {
