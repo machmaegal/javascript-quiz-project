@@ -36,7 +36,10 @@ class Quiz {
 
 	// 6. hasEnded()
 	hasEnded() {
-		if (this.questionsForRendering.length === this.currentQuestionIndex) return true;
+		const reachedLastQuestion =
+			this.questionsForRendering.length === this.currentQuestionIndex;
+
+		if (reachedLastQuestion) return true;
 		return false;
 	}
 
@@ -59,9 +62,9 @@ class Quiz {
 	}
 
 	setDifficulty(setting) {
-		console.log('vor Filterung ', this.questions);
-		this.questionsForRendering = this.questions.filter(question => question.difficulty === setting);
-		console.log("🚀 ~ Quiz ~ setDifficulty ~ this.questionsForRendering:", this.questionsForRendering);
+		this.questionsForRendering = this.questions.filter(
+			question => question.difficulty === setting
+		);
 	}
 
 	getFormattedRemainingTime() {

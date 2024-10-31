@@ -256,11 +256,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		// YOUR CODE HERE:
 		const choiceElements = document.querySelectorAll('#choices li input');
 
-		choiceElements.forEach(inputElement => {
-			if (inputElement.checked) {
-				quiz.checkAnswer(inputElement.value);
-				quiz.moveToNextQuestion();
-				showQuestion();
+		choiceElements.forEach(inputElement =>
+			quiz.checkAnswer(inputElement.value)
+		);
+
+		quiz.moveToNextQuestion();
+		showQuestion();
 			}
 		});
 	}
