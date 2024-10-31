@@ -15,8 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	const easySettingButton = document.querySelector('#easy-setting');
 	const mediumSettingButton = document.querySelector('#medium-setting');
 	const hardSettingButton = document.querySelector('#hard-setting');
-	//const startButton = document.querySelector('#startButton');
-
 
 	// End view elements
 	const resultContainer = document.querySelector('#result');
@@ -113,8 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		}, 1000);
 	}
 
-
-
 	/************  EVENT LISTENERS  ************/
 
 	//startButton.addEventListener('click', startButtonHandler);
@@ -125,12 +121,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	hardSettingButton.addEventListener('click', hardButtonHandler);
 
 	/************  FUNCTIONS  ************/
-
-	// showQuestion() - Displays the current question and its choices
-	// nextButtonHandler() - Handles the click on the next button
-	// showResults() - Displays the end view and the quiz results
-
-
 
 	function showQuestion() {
 		// If the quiz has ended, show the results
@@ -167,9 +157,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			}`; //  This value is hardcoded as a placeholder
 
 		// 4. Create and display new radio input element with a label for each choice.
-		// Loop through the current question `choices`.
-		// For each choice create a new radio input with a label, and append it to the choice container.
-		// Each choice should be displayed as a radio input element with a label:
 
 		const currentQuestion = quiz.questionsForRendering[quiz.currentQuestionIndex];
 
@@ -190,23 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			choiceContainer.appendChild(liElement);
 
 		});
-
 	}
-
-	/* function setDifficulty() {
-		const difficulty = document.querySelector('#settings li input:checked').value;
-		switch (true) {
-			case difficulty === 'easy':
-				quiz.setDifficulty(1);
-				break;
-			case difficulty === 'medium':
-				quiz.setDifficulty(2);
-				break;
-			case difficulty === 'hard':
-				quiz.setDifficulty(3);
-				break;
-		}
-	} */
 
 	function easyButtonHandler() {
 		settingsView.style.display = 'none';
@@ -242,7 +213,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	function nextButtonHandler() {
-		let selectedAnswer; // A variable to store the selected answer value
 
 		// YOUR CODE HERE:
 		const choiceElements = document.querySelectorAll('#choices li input');
