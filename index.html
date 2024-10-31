@@ -10,6 +10,16 @@
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<link rel="stylesheet" href="styles/style.css" />
 	</head>
+	<head>
+		<meta charset="UTF-8" />
+		<title>JavaScript Quiz</title>
+		<!-- <script
+			type="text/javascript"
+			src="https://www.gstatic.com/charts/loader.js"
+		></script> -->
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<link rel="stylesheet" href="styles/style.css" />
+	</head>
 
 	<body>
 		<div class="container">
@@ -24,6 +34,13 @@
 				<button id="hard-setting" class="button-primary">Hard</button>
 			</div>
 
+			<!-- Quiz View -->
+			<!-- Note: this view is shown initially and for each question -->
+			<div id="quizView" class="view">
+				<div id="progress">
+					<div id="progressBar"></div>
+				</div>
+				<div id="questionCount"></div>
 			<!-- Quiz View -->
 			<!-- Note: this view is shown initially and for each question -->
 			<div id="quizView" class="view">
