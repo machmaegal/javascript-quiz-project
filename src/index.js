@@ -189,16 +189,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		// 2. Update the green progress bar
 		// Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
 
-		progressBar.style.width = `${
-			(quiz.currentQuestionIndex / quiz.questionsForRendering.length) * 100
-		}%`; // This value is hardcoded as a placeholder
+		progressBar.style.width = `${(quiz.currentQuestionIndex / quiz.questionsForRendering.length) * 100
+			}%`; // This value is hardcoded as a placeholder
 
 		// 3. Update the question count text
 		// Update the question count (div#questionCount) show the current question out of total questions
 
-		questionCount.innerText = `Question ${quiz.currentQuestionIndex + 1} of ${
-			quiz.questionsForRendering.length
-		}`; //  This value is hardcoded as a placeholder
+		questionCount.innerText = `Question ${quiz.currentQuestionIndex + 1} of ${quiz.questionsForRendering.length
+			}`; //  This value is hardcoded as a placeholder
 
 		// 4. Create and display new radio input element with a label for each choice.
 
@@ -230,8 +228,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		quiz.setDifficulty(1);
 
 		showQuestion();
-
-		startTimer();
 	}
 
 	function mediumButtonHandler() {
@@ -241,8 +237,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		quiz.setDifficulty(2);
 
 		showQuestion();
-
-		startTimer();
 	}
 
 	function hardButtonHandler() {
@@ -252,8 +246,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		quiz.setDifficulty(3);
 
 		showQuestion();
-
-		startTimer();
 	}
 
 	function nextButtonHandler() {
