@@ -102,21 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	let timer;
 
-	function startTimer() {
-		clearInterval(timer);
-
-		timer = setInterval(() => {
-			quiz.timeRemaining--;
-			timeRemainingContainer.innerText = quiz.getFormattedRemainingTime();
-
-			// Animate pie chart over the countdown duration
-			const timeRemainingRelative = quiz.timeRemaining / quizDuration;
-			updatePieChart(timeRemainingRelative);
-
-			if (quiz.timeRemaining === 0) showResults();
-		}, 1000);
-	}
-
 	const ctx = document.getElementById('piechart').getContext('2d');
 	const piechart = new Chart(ctx, {
 		type: 'pie',
@@ -131,9 +116,25 @@ document.addEventListener('DOMContentLoaded', () => {
 			],
 		},
 		options: {
-			// animations: 'none',
+			// without this, the piechart wouldn't render on first game round
+			animations: 'none',
 		},
 	});
+
+	function startTimer() {
+		clearInterval(timer);
+
+		timer = setInterval(() => {
+			quiz.timeRemaining--;
+			timeRemainingContainer.innerText = quiz.getFormattedRemainingTime();
+
+			// Animate pie chart over the countdown duration
+			const timeRemainingRelative = quiz.timeRemaining / quizDuration;
+			updatePieChart(timeRemainingRelative);
+
+			if (quiz.timeRemaining === 0) showResults();
+		}, 1000);
+	}
 
 	function updatePieChart(value) {
 		const redArea = 0.2;
@@ -157,9 +158,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	//startButton.addEventListener('click', startButtonHandler);
 	nextButton.addEventListener('click', nextButtonHandler);
 	restartButton.addEventListener('click', restartButtonHandler);
-	easySettingButton.addEventListener('click', easyButtonHandler);
-	mediumSettingButton.addEventListener('click', mediumButtonHandler);
-	hardSettingButton.addEventListener('click', hardButtonHandler);
+	easySettingButton.addEventListener('click', () => startButtonHandler(1));
+	mediumSettingButton.addEventListener('click', () => startButtonHandler(2));
+	hardSettingButton.addEventListener('click', () => startButtonHandler(3));
 
 	/************  FUNCTIONS  ************/
 
@@ -222,38 +223,24 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 
-	function easyButtonHandler() {
+	function startButtonHandler(difficulty) {
+		// reset quiz data
+		quiz.correctAnswers = 0;
+		quiz.currentQuestionIndex = 0;
+		quiz.timeRemaining = quizDuration;
+		quiz.setDifficulty(difficulty);
+
+		// let the DOm render
 		settingsView.style.display = 'none';
 		quizView.style.display = 'block';
-
-		quiz.setDifficulty(1);
+		timeRemainingContainer.innerText = quiz.getFormattedRemainingTime();
 
 		showQuestion();
 		startTimer();
-	}
-
-	function mediumButtonHandler() {
-		settingsView.style.display = 'none';
-		quizView.style.display = 'block';
-
-		quiz.setDifficulty(2);
-
-		showQuestion();
-		startTimer();
-	}
-
-	function hardButtonHandler() {
-		settingsView.style.display = 'none';
-		quizView.style.display = 'block';
-
-		quiz.setDifficulty(3);
-
-		showQuestion();
-		startTimer();
+		updatePieChart(1);
 	}
 
 	function nextButtonHandler() {
-		// YOUR CODE HERE:
 		const choiceElements = document.querySelectorAll('#choices li input');
 
 		choiceElements.forEach(inputElement =>
@@ -262,20 +249,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		quiz.moveToNextQuestion();
 		showQuestion();
-			}
-		});
 	}
 
 	function showResults() {
-		// YOUR CODE HERE:
-		//
-		// 1. Hide the quiz view (div#quizView)
 		quizView.style.display = 'none';
-
-		// 2. Show the end view (div#endView)
 		endView.style.display = 'flex';
 
-		// 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
 		resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questionsForRendering.length} correct answers!`; // This value is hardcoded as a placeholder
 
 		clearInterval(timer);
@@ -284,14 +263,5 @@ document.addEventListener('DOMContentLoaded', () => {
 	function restartButtonHandler() {
 		settingsView.style.display = 'flex';
 		endView.style.display = 'none';
-
-		quiz.correctAnswers = 0;
-		quiz.currentQuestionIndex = 0;
-		quiz.timeRemaining = quizDuration;
-		timeRemainingContainer.innerText = quiz.getFormattedRemainingTime();
-
-		updatePieChart(1);
-		startTimer();
-		showQuestion();
 	}
 });
