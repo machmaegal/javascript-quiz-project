@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
 	/************  HTML ELEMENTS  ************/
 	// View divs
 	const quizView = document.querySelector('#quizView');
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	/************  SHOW INITIAL CONTENT  ************/
 
 	// Display the time remaining in the time remaining container
-	const timeRemainingContainer = document.getElementById('timeRemaining');
+	const timeRemainingContainer = document.querySelector('#timeRemaining span');
 	timeRemainingContainer.innerText = quiz.getFormattedRemainingTime();
 
 	/************  TIMER  ************/
@@ -107,9 +107,51 @@ document.addEventListener("DOMContentLoaded", () => {
 			quiz.timeRemaining--;
 			timeRemainingContainer.innerText = quiz.getFormattedRemainingTime();
 
+			// Animate pie chart over the countdown duration
+			const timeRemainingRelative = quiz.timeRemaining / quizDuration;
+			updatePieChart(timeRemainingRelative);
+
 			if (quiz.timeRemaining === 0) showResults();
 		}, 1000);
 	}
+
+	const ctx = document.getElementById('piechart').getContext('2d');
+	const piechart = new Chart(ctx, {
+		type: 'pie',
+		data: {
+			hoverOffset: 100,
+			datasets: [
+				{
+					data: [0, 1],
+					backgroundColor: ['transparent', 'lightgreen'],
+					borderWidth: 0,
+				},
+			],
+		},
+		options: {
+			// animations: 'none',
+		},
+	});
+
+	function updatePieChart(value) {
+		const redArea = 0.2;
+		const orangeArea = 0.5;
+
+		if (value === redArea)
+			piechart.data.datasets[0].backgroundColor = ['transparent', 'red'];
+
+		if (value === orangeArea)
+			piechart.data.datasets[0].backgroundColor = ['transparent', 'orange'];
+
+		if (value === 1)
+			piechart.data.datasets[0].backgroundColor = ['transparent', 'lightgreen'];
+
+		piechart.data.datasets[0].data = [1 - value, value];
+		piechart.update();
+	}
+
+	// start timer on page load
+	startTimer();
 
 	/************  EVENT LISTENERS  ************/
 
@@ -147,18 +189,21 @@ document.addEventListener("DOMContentLoaded", () => {
 		// 2. Update the green progress bar
 		// Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
 
-		progressBar.style.width = `${(quiz.currentQuestionIndex / quiz.questionsForRendering.length) * 100
-			}%`; // This value is hardcoded as a placeholder
+		progressBar.style.width = `${
+			(quiz.currentQuestionIndex / quiz.questionsForRendering.length) * 100
+		}%`; // This value is hardcoded as a placeholder
 
 		// 3. Update the question count text
 		// Update the question count (div#questionCount) show the current question out of total questions
 
-		questionCount.innerText = `Question ${quiz.currentQuestionIndex + 1} of ${quiz.questionsForRendering.length
-			}`; //  This value is hardcoded as a placeholder
+		questionCount.innerText = `Question ${quiz.currentQuestionIndex + 1} of ${
+			quiz.questionsForRendering.length
+		}`; //  This value is hardcoded as a placeholder
 
 		// 4. Create and display new radio input element with a label for each choice.
 
-		const currentQuestion = quiz.questionsForRendering[quiz.currentQuestionIndex];
+		const currentQuestion =
+			quiz.questionsForRendering[quiz.currentQuestionIndex];
 
 		currentQuestion.choices.forEach((choice, i) => {
 			const liElement = document.createElement('li');
@@ -175,7 +220,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			`;
 
 			choiceContainer.appendChild(liElement);
-
 		});
 	}
 
@@ -213,7 +257,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	function nextButtonHandler() {
-
 		// YOUR CODE HERE:
 		const choiceElements = document.querySelectorAll('#choices li input');
 
@@ -250,5 +293,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		quiz.timeRemaining = quizDuration;
 		timeRemainingContainer.innerText = quiz.getFormattedRemainingTime();
 
+		updatePieChart(1);
+		startTimer();
+		showQuestion();
 	}
 });
